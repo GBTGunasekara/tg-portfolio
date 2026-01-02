@@ -1,0 +1,28 @@
+---
+/**
+ * Sets theme BEFORE first paint to avoid flicker.
+ * Uses BOTH:
+ *  - html[data-theme="dark|light"]
+ *  - html.classList ("dark")
+ * so it works no matter how your CSS/Tailwind is wired.
+ */
+---
+<meta name="color-scheme" content="light dark" />
+
+<script is:inline>
+(function () {
+  const STORAGE_KEY = "tg-theme";
+  const root = document.documentElement;
+
+  const saved = localStorage.getItem(STORAGE_KEY);
+  const prefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const theme = saved ?? (prefersDark ? "dark" : "light");
+
+  root.setAttribute("data-theme", theme);
+  root.classList.toggle("dark", theme === "dark");
+  root.style.colorScheme = theme;
+})();
+</script>

@@ -1,0 +1,19 @@
+:root {
+  /* Light (off-white, not pure white) */
+  --bg: 248 250 252;        /* slate-50 */
+  --surface: 255 255 255;   /* white cards */
+  --fg: 15 23 42;           /* slate-900 */
+  --muted: 100 116 139;     /* slate-500 */
+  --border: 203 213 225;    /* slate-300 */
+  --primary: 56 189 248;    /* cyan-400 (AI vibe) */
+}
+
+html[data-theme="dark"] {
+  /* Dark (deep navy, not pure black) */
+  --bg: 8 11 26;            /* deep navy */
+  --surface: 14 19 40;      /* card surface */
+  --fg: 226 232 240;        /* slate-200 */
+  --muted: 148 163 184;     /* slate-400 */
+  --border: 51 65 85;       /* slate-700 */
+  --primary: 56 189 248;    /* cyan glow */
+}
