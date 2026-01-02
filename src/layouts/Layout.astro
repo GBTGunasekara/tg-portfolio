@@ -7,8 +7,10 @@ import ThemeToggle from "../components/ThemeToggle.astro";
 
 <html lang="en">
   <head>
+    <!-- ✅ Critical for mobile: prevents the "everything is tiny / fits in one screen" scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
     <ThemeInit />
-    ...
   </head>
 <body>
 <header class="site-header">
@@ -30,6 +32,43 @@ import ThemeToggle from "../components/ThemeToggle.astro";
   <main>
     <slot />
   </main>
+
+  <script is:inline>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealEls = [...document.querySelectorAll('[data-reveal]')];
+
+  // If user prefers reduced motion, just show everything immediately
+  if (reduceMotion) {
+    revealEls.forEach(el => el.classList.add('is-revealed'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+
+        const el = entry.target;
+        el.classList.add('is-revealed');
+
+        // If stagger container, reveal children with delays
+        const stagger = el.getAttribute('data-reveal-stagger');
+        if (stagger) {
+          const children = [...el.querySelectorAll('[data-reveal-item]')];
+          children.forEach((c, i) => {
+            c.style.setProperty('--d', `${i * 70}ms`);
+            c.classList.add('is-revealed');
+          });
+        }
+
+        // reveal once
+        io.unobserve(el);
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+
+    revealEls.forEach(el => io.observe(el));
+  }
+</script>
+
+
 </body>
 
 </html>

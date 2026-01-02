@@ -5,7 +5,7 @@ export const skillGroups = [
   },
   {
     title: "Frameworks",
-    items: ["Angular", ".NET / ASP.NET", "Aurena (IFS)"],
+    items: ["Angular", ".NET / ASP.NET", "Aurena (IFS)", "Astro"],
   },
   {
     title: "Cloud & DevOps",
@@ -38,15 +38,25 @@ export const skillGroups = [
     ],
   },
   {
-    title: "Data & Tools",
+    title: "Data & Databases",
     items: [
       "Oracle",
       "MySQL",
-      "Firebase",
+      "Azure Fileshare",
       "JSON",
+      "Firebase",
+    ],
+  },
+    {
+    title: "Tools",
+    items: [
+      "Git/Bitbucket",
+      "Visual Studio",
+      "VS Code",
       "REST APIs",
       "Postman",
-      "Git/Bitbucket",
+      "IFS Developer Studio",
+      "PL/SQL Developer",
       "Jira",
       "Confluence",
     ],

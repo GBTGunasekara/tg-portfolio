@@ -33,7 +33,8 @@ const GROUP_COLOR = {
   "Frameworks": "167 139 250",
   "Cloud & DevOps": "34 211 238",
   "AI & ML": "244 114 182",
-  "Data & Tools": "251 191 36",
+  "Data & Databases": "251 191 36",
+  "Tools": "151 120 86",
 };
 
 const TAG_COLOR = (tag = "") => {
@@ -60,8 +61,8 @@ const iconSvg = {
 
 const expTags = (team = "") => {
   const t = team.toLowerCase();
-  if (t.includes("ai")) return ["MLDP", "LLM/ML", "Azure", "CI/CD"];
-  if (t.includes("framework")) return ["Framework", "Kubernetes", "Pipelines", "Automation"];
+  if (t.includes("ai")) return ["AI/ML/LLM", "Azure", "Framework", "Automation"];
+  if (t.includes("framework")) return ["CI/CD", "Platform", "Asset", "IFS Cloud", ];
   if (t.includes("asset")) return ["IFS Cloud", "Aurena", "UX", "Quality"];
   return ["Engineering", "Delivery"];
 };
@@ -70,10 +71,9 @@ const expTags = (team = "") => {
 <Layout title={`${profile.name} | Portfolio`}>
   <main class="relative mx-auto max-w-6xl px-4 py-10">
     <!-- AI background -->
-    <div class="ai-bg pointer-events-none absolute inset-0 -z-10"></div>
 
     <!-- HERO -->
-    <section class="relative mt-2">
+    <section class="relative mt-2" data-reveal>
       <div class="hero-glow pointer-events-none absolute -top-16 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full blur-3xl"></div>
 
       <div class="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center">
@@ -125,7 +125,7 @@ const expTags = (team = "") => {
         </div>
 
         <!-- Profile image -->
-        <div class="relative mx-auto">
+        <div class="relative mx-auto" data-reveal>
           <div class="avatar-glow pointer-events-none absolute -inset-10 rounded-full blur-3xl"></div>
 		  <div class="absolute inset-0 -z-10 rounded-full p-[2px] bg-[linear-gradient(135deg,rgb(var(--primary)/0.6),transparent)] blur-[0px]"></div>
           <img
@@ -139,7 +139,7 @@ const expTags = (team = "") => {
     </section>
 
     <!-- HIGHLIGHTS -->
-    <section class="mt-14">
+    <section class="mt-14" data-reveal>
       <h2 class="section-title">
         <span class="section-icon" set:html={iconSvg.spark} />
         Highlights
@@ -163,7 +163,7 @@ const expTags = (team = "") => {
     </section>
 
     <!-- SKILLS -->
-    <section id="skills" class="mt-14 scroll-mt-24">
+    <section id="skills" class="mt-14 scroll-mt-24" data-reveal>
       <h2 class="section-title">
         <span class="section-icon" set:html={iconSvg.stack} />
         Skills
@@ -187,7 +187,7 @@ const expTags = (team = "") => {
     </section>
 
     <!-- EXPERIENCE -->
-    <section id="experience" class="mt-14 scroll-mt-24">
+    <section id="experience" class="mt-14 scroll-mt-24" data-reveal>
       <h2 class="section-title">
         <span class="section-icon" set:html={iconSvg.cpu} />
         Experience
@@ -222,7 +222,7 @@ const expTags = (team = "") => {
     </section>
 
     <!-- EDUCATION -->
-    <section id="education" class="mt-14 scroll-mt-24">
+    <section id="education" class="mt-14 scroll-mt-24" data-reveal>
       <h2 class="section-title">
         <span class="section-icon" set:html={iconSvg.stack} />
         Education
@@ -239,22 +239,24 @@ const expTags = (team = "") => {
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="mt-14 scroll-mt-24">
-      <h2 class="section-title">
-        <span class="section-icon" set:html={iconSvg.link} />
-        Projects & Certifications
-      </h2>
+<!--
+<section id="projects" class="mt-14 scroll-mt-24" data-reveal>
+  <h2 class="section-title">
+    <span class="section-icon" set:html={iconSvg.link} />
+    Projects & Certifications
+  </h2>
 
-      <div class="panel mt-5 p-5">
-        <p class="font-semibold">Coming soon</p>
-        <p class="mt-1 text-sm opacity-80">
-          Public demos, case studies, and certifications will be added here.
-        </p>
-      </div>
-    </section>
+  <div class="panel mt-5 p-5">
+    <p class="font-semibold">Coming soon</p>
+    <p class="mt-1 text-sm opacity-80">
+      Public demos, case studies, and certifications will be added here.
+    </p>
+  </div>
+</section>
+-->
 
     <!-- CONTACT -->
-    <section id="contact" class="mt-14 scroll-mt-24">
+    <section id="contact" class="mt-14 scroll-mt-24" data-reveal>
       <h2 class="section-title">
         <span class="section-icon" set:html={iconSvg.mail} />
         Contact

@@ -1,7 +1,7 @@
 @import "./theme.css";
 @import "tailwindcss";
 
-html, body { height: 100%; }
+html, body { min-height: 100%}
 
 body {
   background: rgb(var(--bg));
@@ -12,7 +12,113 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgb(var(--bg) / 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgb(var(--border) / 0.7);
+
+  /* Use theme-specific header variables so Light/Dark both look intentional */
+  background: linear-gradient(
+    180deg,
+    rgb(var(--header-bg) / 0.92),
+    rgb(var(--header-bg-2) / 0.78)
+  );
+
+  border-bottom: 1px solid rgb(var(--header-border));
+  box-shadow: var(--header-shadow);
+
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* Header text + links (works for both themes) */
+.site-header,
+.site-header a {
+  color: rgb(var(--header-fg));
+}
+
+.site-header a {
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 160ms ease, color 160ms ease;
+}
+
+.site-header a:hover {
+  opacity: 1;
+  color: rgb(var(--primary));
+}
+
+/* Theme toggle button inside header (covers most common ThemeToggle DOMs) */
+.site-header nav button,
+.site-header .theme-toggle button,
+.site-header [aria-label*="theme" i] {
+  color: rgb(var(--header-fg));
+  border: 1px solid rgb(var(--header-border));
+  background: rgb(var(--header-bg) / 0.35);
+  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.site-header nav button:hover,
+.site-header .theme-toggle button:hover,
+.site-header [aria-label*="theme" i]:hover {
+  border-color: rgb(var(--primary));
+  background: rgb(var(--header-bg) / 0.55);
+  transform: translateY(-1px);
+}
+
+.site-header nav button svg,
+.site-header .theme-toggle button svg,
+.site-header [aria-label*="theme" i] svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+}
+
+
+
+.dark body { color: rgba(226, 232, 240, 0.82); } /* slate-200-ish */
+.dark h1, .dark h2, .dark h3 {
+  color: rgb(248, 250, 252); /* slate-50 */
+}
+
+/* Scroll reveal */
+[data-reveal],
+[data-reveal-item] {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(6px);
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease,
+    filter 700ms ease;
+  will-change: opacity, transform, filter;
+}
+
+[data-reveal].is-revealed,
+[data-reveal-item].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* stagger support (delay comes from JS as --d) */
+[data-reveal-item] {
+  transition-delay: var(--d, 0ms);
+}
+
+/* micro interactions */
+.button,
+a.button,
+.card {
+  transition: transform 180ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.button:hover,
+a.button:hover {
+  transform: translateY(-1px);
 }
