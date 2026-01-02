@@ -13,25 +13,103 @@ import ThemeToggle from "../components/ThemeToggle.astro";
     <ThemeInit />
   </head>
 <body>
-<header class="site-header">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    <a href="/" class="font-semibold">TG</a>
+ <header class="site-header" data-site-header>
+      <div class="header-inner mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <a
+          href="/"
+          class="text-lg font-semibold tracking-wide text-[rgb(var(--text))]"
+        >
+          TG
+        </a>
 
-    <nav class="flex items-center gap-5 text-sm">
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
-      <ThemeToggle />
-    </nav>
-  </div>
-</header>
+        <div class="header-right flex items-center gap-3">
+          <nav id="primary-nav" class="site-nav flex items-center gap-5 text-sm" aria-label="Primary">
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#education" class="nav-link">Education</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </nav>
 
+          <ThemeToggle />
 
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-controls="primary-nav"
+            aria-expanded="false"
+            data-nav-toggle
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
 
-  <main>
-    <slot />
-  </main>
+    <main>
+      <slot />
+    </main>
+
+    <script is:inline>
+      (() => {
+        const initMobileNav = () => {
+          const header = document.querySelector('[data-site-header]');
+          const toggle = document.querySelector('[data-nav-toggle]');
+          const nav = document.getElementById('primary-nav');
+          if (!header || !toggle || !nav) return;
+
+          // Prevent double-binding if Astro rehydrates / page-load triggers.
+          if (toggle.dataset.bound === 'true') return;
+          toggle.dataset.bound = 'true';
+
+          const close = () => {
+            header.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+          };
+
+          const open = () => {
+            header.classList.add('is-open');
+            toggle.setAttribute('aria-expanded', 'true');
+          };
+
+          const toggleMenu = () => {
+            header.classList.contains('is-open') ? close() : open();
+          };
+
+          toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenu();
+          });
+
+          // Close when clicking a link
+          nav.querySelectorAll('a[href^="#"]').forEach((a) => {
+            a.addEventListener('click', close);
+          });
+
+          // Close on outside click
+          document.addEventListener('click', (e) => {
+            if (!header.contains(e.target)) close();
+          });
+
+          // Close on ESC
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') close();
+          });
+
+          // If resized back to desktop, ensure menu is closed
+          window.addEventListener('resize', () => {
+            if (window.matchMedia('(min-width: 721px)').matches) close();
+          });
+        };
+
+        document.addEventListener('DOMContentLoaded', initMobileNav);
+        document.addEventListener('astro:page-load', initMobileNav);
+      })();
+    </script>
+
 
   <script is:inline>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
